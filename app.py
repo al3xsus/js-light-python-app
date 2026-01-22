@@ -1,6 +1,20 @@
 """
 Flask + HTMX Demo Application
 A modern web application showcasing HTMX capabilities with Flask and Jinja2
+
+Available Endpoints:
+- / - Home page with feature overview
+- /basic - Basic HTMX requests and triggers
+- /tasks - Task management with CRUD operations
+- /search - Live search and infinite scroll
+- /forms - Form validation with server-side checks
+- /polling - Auto-refresh and live notifications
+- /modal - Modal dialogs and OOB swaps
+- /transitions - CSS transitions and loading states
+- /sse - Server-sent events for real-time updates
+
+API Endpoints:
+- /api/* - Various API endpoints for HTMX interactions
 """
 from flask import Flask, render_template, request, jsonify, Response
 from datetime import datetime
@@ -8,6 +22,7 @@ import time
 import json
 
 app = Flask(__name__)
+# SECURITY: Change this secret key in production - use environment variables
 app.config['SECRET_KEY'] = 'dev-secret-key-change-in-production'
 
 # In-memory data store for demo purposes
@@ -452,4 +467,6 @@ def sse_content():
 
 
 if __name__ == '__main__':
+    # SECURITY WARNING: Debug mode should only be used in development
+    # In production, use a WSGI server (gunicorn, uwsgi) without debug=True
     app.run(debug=True, host='0.0.0.0', port=5000)
