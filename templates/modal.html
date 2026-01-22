@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Modal & OOB Swaps - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>Modal Dialogs & Out-of-Band Swaps</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    Dynamic modals and Out-of-Band (OOB) swaps allow you to update multiple parts of the page from a single request.
+</p>
+
+<div class="card">
+    <h2 class="card-title">Dynamic Modals</h2>
+    <p>Click buttons to load different content into the modal.</p>
+    
+    <button class="btn btn-primary" onclick="openModal()" hx-get="/api/modal-content/info" hx-target="#modal-body">
+        Open Info Modal
+    </button>
+    <button class="btn btn-secondary" onclick="openModal()" hx-get="/api/modal-content/form" hx-target="#modal-body">
+        Open Form Modal
+    </button>
+</div>
+
+<div class="card">
+    <h2 class="card-title">Out-of-Band Swaps</h2>
+    <p>Update multiple page elements with a single request.</p>
+    
+    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+        <div style="flex: 1;">
+            <h4>Main Content</h4>
+            <div id="main-content" class="alert alert-info">Original main content</div>
+        </div>
+        <div style="flex: 1;">
+            <h4>Sidebar Content</h4>
+            <div id="sidebar-content" class="alert alert-warning">Original sidebar content</div>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 1rem;">
+        <h4>Header Status</h4>
+        <div id="header-status">
+            <span class="badge badge-warning">Disconnected</span>
+        </div>
+    </div>
+    
+    <button class="btn btn-primary" 
+            hx-post="/api/oob-demo" 
+            hx-target="#main-content">
+        Update All Areas (OOB)
+    </button>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modal-title">Modal Title</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <p>Modal content will be loaded here...</p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>HTMX Features Demonstrated</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>Dynamic Modals</strong> - Load content on demand</li>
+        <li><strong>Out-of-Band Swaps</strong> - Update multiple elements with one request</li>
+        <li><strong>hx-swap-oob</strong> - Swap elements outside the target</li>
+        <li><strong>Flexible Updates</strong> - Update any part of the page</li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function openModal() {
+    document.getElementById('modal').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+}
+
+// Close modal when clicking outside
+document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+</script>
+{% endblock %}

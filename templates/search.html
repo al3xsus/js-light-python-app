@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Search & Infinite Scroll - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>Search & Infinite Scroll</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    Live search with debouncing and infinite scroll pagination for optimal user experience.
+</p>
+
+<div class="card">
+    <h2 class="card-title">Live Search</h2>
+    <p>Search for users as you type. The search is debounced to reduce server load.</p>
+    
+    <div class="form-group">
+        <input type="text" 
+               name="q"
+               class="form-control" 
+               placeholder="Search users..." 
+               hx-get="/api/search" 
+               hx-trigger="keyup changed delay:500ms"
+               hx-target="#search-results"
+               hx-indicator="#search-spinner">
+        <div id="search-spinner" class="htmx-indicator" style="margin-top: 0.5rem;">
+            <div class="spinner"></div> Searching...
+        </div>
+    </div>
+    
+    <div id="search-results">
+        <p class="alert alert-info">Start typing to search...</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">Infinite Scroll</h2>
+    <p>Scroll down to automatically load more users. No pagination buttons needed!</p>
+    
+    <div id="infinite-scroll-container" style="max-height: 500px; overflow-y: auto;">
+        <div id="infinite-results" 
+             hx-get="/api/users/infinite?page=1" 
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>HTMX Features Demonstrated</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>Debouncing</strong> - <code>delay:500ms</code> prevents excessive requests</li>
+        <li><strong>Loading Indicators</strong> - Show feedback during requests</li>
+        <li><strong>Infinite Scroll</strong> - <code>hx-trigger="revealed"</code> loads content when visible</li>
+        <li><strong>Dynamic Pagination</strong> - Server determines if more content exists</li>
+        <li><strong>Optimized UX</strong> - Smooth loading without user interaction</li>
+    </ul>
+</div>
+{% endblock %}

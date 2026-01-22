@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Polling & Auto-Refresh - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>Polling & Auto-Refresh</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    Automatically refresh content at regular intervals. Perfect for dashboards and real-time monitoring.
+</p>
+
+<div class="card">
+    <h2 class="card-title">Server Status Monitor</h2>
+    <p>This panel refreshes every 3 seconds to show live server metrics.</p>
+    
+    <div id="server-status" 
+         hx-get="/api/server-status" 
+         hx-trigger="load, every 3s"
+         hx-swap="innerHTML">
+        <p class="alert alert-info">Loading server status...</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">Live Notifications</h2>
+    <p>Check for new notifications every 5 seconds.</p>
+    
+    <div id="notifications-container">
+        <div hx-get="/api/notifications" 
+             hx-trigger="load, every 5s"
+             hx-target="#notifications-container"
+             hx-swap="afterbegin">
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>HTMX Features Demonstrated</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>Polling</strong> - <code>hx-trigger="every 3s"</code> repeats requests</li>
+        <li><strong>Load Trigger</strong> - <code>load</code> triggers immediately on page load</li>
+        <li><strong>Auto-Refresh</strong> - Content updates without user action</li>
+        <li><strong>Real-Time Data</strong> - Perfect for dashboards and monitoring</li>
+        <li><strong>Efficient Updates</strong> - Only refreshes what's needed</li>
+    </ul>
+</div>
+{% endblock %}

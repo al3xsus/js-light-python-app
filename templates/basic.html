@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Basic HTMX - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>Basic HTMX Examples</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    Learn the fundamentals of HTMX with simple GET and POST requests. These examples show how easy it is to add dynamic behavior without writing JavaScript.
+</p>
+
+<div class="grid grid-2">
+    <div class="card">
+        <h2 class="card-title">Simple GET Request</h2>
+        <p>Click the button to fetch a greeting from the server.</p>
+        
+        <button 
+            class="btn btn-primary"
+            hx-get="/api/greet?name=HTMX"
+            hx-target="#greet-result"
+            hx-swap="innerHTML">
+            Say Hello
+        </button>
+        
+        <div id="greet-result" style="margin-top: 1rem;"></div>
+        
+        <div class="alert alert-info" style="margin-top: 1rem;">
+            <strong>How it works:</strong><br>
+            <code>hx-get</code> - Makes a GET request<br>
+            <code>hx-target</code> - Where to put the response<br>
+            <code>hx-swap</code> - How to swap the content
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">Dynamic Input</h2>
+        <p>Type your name and get a personalized greeting.</p>
+        
+        <div class="form-group">
+            <input 
+                type="text" 
+                class="form-control" 
+                name="name"
+                placeholder="Your name"
+                hx-get="/api/greet"
+                hx-trigger="keyup changed delay:500ms"
+                hx-target="#dynamic-greet"
+                hx-include="this">
+        </div>
+        
+        <div id="dynamic-greet"></div>
+        
+        <div class="alert alert-info" style="margin-top: 1rem;">
+            <strong>How it works:</strong><br>
+            <code>hx-trigger</code> - When to make the request<br>
+            <code>delay:500ms</code> - Debouncing for better UX<br>
+            <code>hx-include</code> - Include this input in the request
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">Server Time</h2>
+        <p>Click to get the current server time.</p>
+        
+        <button 
+            class="btn btn-secondary"
+            hx-get="/api/time"
+            hx-target="#time-result"
+            hx-swap="innerHTML">
+            Get Server Time
+        </button>
+        
+        <div id="time-result" style="margin-top: 1rem;"></div>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">Loading States</h2>
+        <p>HTMX automatically adds classes during requests.</p>
+        
+        <button 
+            class="btn btn-primary"
+            hx-get="/api/greet?name=World"
+            hx-target="#loading-result">
+            <span class="htmx-indicator spinner"></span>
+            Click Me
+        </button>
+        
+        <div id="loading-result" style="margin-top: 1rem;"></div>
+        
+        <div class="alert alert-info" style="margin-top: 1rem;">
+            <strong>How it works:</strong><br>
+            During requests, HTMX adds <code>htmx-request</code> class.<br>
+            Elements with <code>htmx-indicator</code> class are shown.
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <h2>HTMX Attributes Used</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>hx-get</strong> - Issues a GET request to the URL</li>
+        <li><strong>hx-post</strong> - Issues a POST request to the URL</li>
+        <li><strong>hx-target</strong> - Specifies where to load the response</li>
+        <li><strong>hx-swap</strong> - Controls how content is swapped (innerHTML, outerHTML, etc.)</li>
+        <li><strong>hx-trigger</strong> - Specifies what triggers the request</li>
+        <li><strong>hx-include</strong> - Includes additional elements in the request</li>
+    </ul>
+</div>
+{% endblock %}

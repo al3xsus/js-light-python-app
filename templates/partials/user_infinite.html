@@ -1,0 +1,23 @@
+<ul class="user-list">
+{% for user in users %}
+    <li class="user-item">
+        <div class="user-avatar">{{ user.name[0] }}</div>
+        <div class="user-info">
+            <div class="user-name">{{ user.name }}</div>
+            <div class="user-email">{{ user.email }}</div>
+        </div>
+    </li>
+{% endfor %}
+</ul>
+
+{% if has_more %}
+<div hx-get="/api/users/infinite?page={{ page }}" 
+     hx-trigger="revealed"
+     hx-swap="outerHTML"
+     style="text-align: center; padding: 1rem;">
+    <div class="spinner"></div>
+    <p>Loading more...</p>
+</div>
+{% else %}
+<p class="alert alert-info" style="text-align: center;">No more users to load</p>
+{% endif %}

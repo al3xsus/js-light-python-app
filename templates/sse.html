@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Server-Sent Events - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>Server-Sent Events (SSE)</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    Server-Sent Events allow the server to push updates to the client in real-time. Perfect for live feeds, notifications, and streaming data.
+</p>
+
+<div class="card">
+    <h2 class="card-title">Live Data Stream</h2>
+    <p>Click start to receive real-time updates from the server via SSE.</p>
+    
+    <button class="btn btn-primary" onclick="startSSE()">Start Stream</button>
+    <button class="btn btn-secondary" onclick="stopSSE()">Stop Stream</button>
+    
+    <div id="sse-status" style="margin-top: 1rem;">
+        <span class="badge badge-warning">Not Started</span>
+    </div>
+    
+    <div class="sse-container" style="margin-top: 1rem;">
+        <div id="sse-results"></div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>How SSE Works</h2>
+    <div class="alert alert-info">
+        <strong>Server-Sent Events (SSE):</strong><br>
+        • Server maintains an open connection to the client<br>
+        • Server can push data whenever needed<br>
+        • More efficient than polling for real-time data<br>
+        • Perfect for live feeds, notifications, and streaming
+    </div>
+</div>
+
+<div class="card">
+    <h2>HTMX Features Demonstrated</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>SSE Extension</strong> - Built-in support for Server-Sent Events</li>
+        <li><strong>Real-Time Updates</strong> - Server pushes data to client</li>
+        <li><strong>Event Streaming</strong> - Handle continuous data streams</li>
+        <li><strong>Efficient Communication</strong> - Better than polling for live data</li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let eventSource = null;
+
+function startSSE() {
+    if (eventSource) {
+        eventSource.close();
+    }
+    
+    document.getElementById('sse-status').innerHTML = '<span class="badge badge-success">Connected</span>';
+    document.getElementById('sse-results').innerHTML = '';
+    
+    eventSource = new EventSource('/api/sse-stream');
+    
+    eventSource.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        
+        // Send the data to our endpoint to get formatted HTML
+        fetch('/api/sse-content', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.text())
+        .then(html => {
+            const container = document.getElementById('sse-results');
+            container.insertAdjacentHTML('afterbegin', html);
+            
+            // Keep only last 10 items
+            while (container.children.length > 10) {
+                container.removeChild(container.lastChild);
+            }
+        });
+    };
+    
+    eventSource.onerror = function() {
+        document.getElementById('sse-status').innerHTML = '<span class="badge badge-error">Disconnected</span>';
+        eventSource.close();
+        eventSource = null;
+    };
+}
+
+function stopSSE() {
+    if (eventSource) {
+        eventSource.close();
+        eventSource = null;
+        document.getElementById('sse-status').innerHTML = '<span class="badge badge-warning">Stopped</span>';
+    }
+}
+</script>
+{% endblock %}
