@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Task Management - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>Task Management (CRUD Operations)</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    A complete task management system demonstrating Create, Read, Update, and Delete operations with HTMX. Features inline editing, delete confirmations, and real-time filtering.
+</p>
+
+<div class="card">
+    <h2 class="card-title">Add New Task</h2>
+    <form hx-post="/api/tasks" 
+          hx-target="#task-list" 
+          hx-swap="afterbegin"
+          hx-on::after-request="this.reset()">
+        <div class="form-group">
+            <input type="text" 
+                   name="title" 
+                   class="form-control" 
+                   placeholder="Task title" 
+                   required>
+        </div>
+        <div class="form-group">
+            <select name="priority" class="form-select">
+                <option value="low">Low Priority</option>
+                <option value="medium" selected>Medium Priority</option>
+                <option value="high">High Priority</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+</div>
+
+<div class="card">
+    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="card-title" style="margin: 0;">Tasks</h2>
+        <div>
+            <button class="btn btn-small btn-primary" 
+                    hx-get="/api/tasks?status=all" 
+                    hx-target="#task-list">All</button>
+            <button class="btn btn-small btn-secondary" 
+                    hx-get="/api/tasks?status=active" 
+                    hx-target="#task-list">Active</button>
+            <button class="btn btn-small btn-success" 
+                    hx-get="/api/tasks?status=completed" 
+                    hx-target="#task-list">Completed</button>
+        </div>
+    </div>
+    
+    <ul id="task-list" class="task-list">
+        {% for task in tasks %}
+            {% include 'partials/task_item.html' %}
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>HTMX Features Demonstrated</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>POST Request</strong> - Adding new tasks</li>
+        <li><strong>PUT Request</strong> - Updating task completion status</li>
+        <li><strong>DELETE Request</strong> - Removing tasks</li>
+        <li><strong>Inline Editing</strong> - Edit tasks without page reload</li>
+        <li><strong>Conditional Swaps</strong> - Different swap strategies for different actions</li>
+        <li><strong>Target Selection</strong> - Update specific parts of the page</li>
+        <li><strong>Form Reset</strong> - Clear form after submission</li>
+    </ul>
+</div>
+{% endblock %}

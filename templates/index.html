@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <h1>🚀 Flask + HTMX Demo</h1>
+    <p>A comprehensive showcase of HTMX capabilities with Flask and Jinja2</p>
+</div>
+
+<div class="grid grid-3">
+    <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Basic Requests</h3>
+        <p class="feature-description">Simple GET/POST requests without page reloads. Learn the fundamentals of HTMX.</p>
+        <a href="/basic" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <h3 class="feature-title">Task Management</h3>
+        <p class="feature-description">Full CRUD operations with inline editing, delete confirmations, and real-time updates.</p>
+        <a href="/tasks" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3 class="feature-title">Search & Scroll</h3>
+        <p class="feature-description">Live search with debouncing and infinite scroll pagination for better UX.</p>
+        <a href="/search" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3 class="feature-title">Forms & Validation</h3>
+        <p class="feature-description">Real-time form validation with server-side checks and inline feedback.</p>
+        <a href="/forms" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3 class="feature-title">Polling & Updates</h3>
+        <p class="feature-description">Auto-refresh content with polling for live updates and notifications.</p>
+        <a href="/polling" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🪟</div>
+        <h3 class="feature-title">Modal Dialogs</h3>
+        <p class="feature-description">Dynamic modals and out-of-band swaps for updating multiple page areas.</p>
+        <a href="/modal" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3 class="feature-title">CSS Transitions</h3>
+        <p class="feature-description">Smooth animations and loading states for enhanced user experience.</p>
+        <a href="/transitions" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📡</div>
+        <h3 class="feature-title">Server-Sent Events</h3>
+        <p class="feature-description">Real-time server push updates using SSE for live data streaming.</p>
+        <a href="/sse" class="btn btn-primary" style="margin-top: 1rem;">Explore</a>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <h2>What is HTMX?</h2>
+    <p>HTMX is a modern JavaScript library that allows you to access AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes. This means you can build modern user interfaces with the simplicity and power of hypertext.</p>
+    
+    <h3 style="margin-top: 1.5rem;">Key Features</h3>
+    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+        <li>🎯 <strong>Declarative</strong> - Define behavior in HTML attributes</li>
+        <li>⚡ <strong>Fast</strong> - No build step, minimal JavaScript</li>
+        <li>🔧 <strong>Flexible</strong> - Works with any backend framework</li>
+        <li>📦 <strong>Lightweight</strong> - ~14kb min.gz</li>
+        <li>🌐 <strong>Progressive</strong> - Enhance existing applications gradually</li>
+    </ul>
+</div>
+{% endblock %}

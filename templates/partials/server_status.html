@@ -1,0 +1,29 @@
+<div class="grid grid-3">
+    <div class="stat-card">
+        <div class="stat-value">{{ cpu }}%</div>
+        <div class="stat-label">CPU Usage</div>
+        <div class="progress" style="margin-top: 0.5rem;">
+            <div class="progress-bar" style="width: {{ cpu }}%"></div>
+        </div>
+    </div>
+    
+    <div class="stat-card" style="border-left-color: var(--success-color);">
+        <div class="stat-value" style="color: var(--success-color);">{{ memory }}%</div>
+        <div class="stat-label">Memory Usage</div>
+        <div class="progress" style="margin-top: 0.5rem;">
+            <div class="progress-bar" style="width: {{ memory }}%; background: var(--success-color);"></div>
+        </div>
+    </div>
+    
+    <div class="stat-card" style="border-left-color: var(--warning-color);">
+        <div class="stat-value" style="color: var(--warning-color);">{{ disk }}%</div>
+        <div class="stat-label">Disk Usage</div>
+        <div class="progress" style="margin-top: 0.5rem;">
+            <div class="progress-bar" style="width: {{ disk }}%; background: var(--warning-color);"></div>
+        </div>
+    </div>
+</div>
+
+<p style="text-align: center; margin-top: 1rem; color: #6b7280;">
+    Last updated: {{ timestamp }}
+</p>

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Forms & Validation - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>Forms & Validation</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    Real-time form validation with server-side checks. Get instant feedback as users fill out forms.
+</p>
+
+<div class="card">
+    <h2 class="card-title">User Registration Form</h2>
+    <form id="registration-form" hx-post="/api/submit-form" hx-target="#form-result">
+        <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" 
+                   name="username" 
+                   class="form-control" 
+                   placeholder="Choose a username"
+                   hx-post="/api/validate-username"
+                   hx-trigger="blur"
+                   hx-target="#username-validation"
+                   required>
+            <div id="username-validation"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" 
+                   name="email" 
+                   class="form-control" 
+                   placeholder="your@email.com"
+                   hx-post="/api/validate-email"
+                   hx-trigger="blur"
+                   hx-target="#email-validation"
+                   required>
+            <div id="email-validation"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <span class="htmx-indicator spinner"></span>
+            Register
+        </button>
+    </form>
+    
+    <div id="form-result" style="margin-top: 1rem;"></div>
+</div>
+
+<div class="card">
+    <h2>How It Works</h2>
+    <div class="alert alert-info">
+        <strong>Validation on Blur:</strong><br>
+        When you leave an input field (blur event), HTMX sends the value to the server for validation. The server responds with either an error message or a success indicator.
+    </div>
+    
+    <div class="alert alert-warning">
+        <strong>Try These:</strong><br>
+        • Usernames "admin", "user", "test" are taken<br>
+        • Username must be at least 3 characters<br>
+        • Email must be valid format
+    </div>
+</div>
+
+<div class="card">
+    <h2>HTMX Features Demonstrated</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>Field Validation</strong> - Validate individual fields on blur</li>
+        <li><strong>Server-Side Checks</strong> - Real validation logic on the backend</li>
+        <li><strong>Inline Feedback</strong> - Show errors/success next to fields</li>
+        <li><strong>Form Submission</strong> - Submit entire form with AJAX</li>
+        <li><strong>Multiple Targets</strong> - Different fields update different areas</li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<li class="task-item" id="task-{{ task.id }}">
+    <form hx-put="/api/tasks/{{ task.id }}"
+          hx-target="#task-{{ task.id }}"
+          hx-swap="outerHTML"
+          style="display: flex; gap: 1rem; width: 100%; align-items: center;">
+        
+        <input type="text" 
+               name="title" 
+               value="{{ task.title }}"
+               class="form-control"
+               style="flex: 1;"
+               required>
+        
+        <select name="priority" class="form-select" style="width: 150px;">
+            <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
+            <option value="medium" {% if task.priority == 'medium' %}selected{% endif %}>Medium</option>
+            <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
+        </select>
+        
+        <div style="display: flex; gap: 0.5rem;">
+            <button type="submit" class="btn btn-small btn-success">Save</button>
+            <button type="button" 
+                    class="btn btn-small btn-secondary"
+                    hx-get="/api/tasks/{{ task.id }}"
+                    hx-target="#task-{{ task.id }}"
+                    hx-swap="outerHTML">
+                Cancel
+            </button>
+        </div>
+    </form>
+</li>

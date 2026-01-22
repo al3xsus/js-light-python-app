@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}CSS Transitions - Flask Demo{% endblock %}
+
+{% block content %}
+<h1>CSS Transitions & Loading States</h1>
+<p class="card" style="margin-bottom: 2rem;">
+    HTMX provides CSS classes during transitions that you can use to create smooth animations.
+</p>
+
+<div class="card">
+    <h2 class="card-title">Smooth Transitions</h2>
+    <p>Watch the smooth fade transition when content loads.</p>
+    
+    <button class="btn btn-primary" 
+            hx-get="/api/slow-load?duration=2" 
+            hx-target="#transition-demo"
+            hx-swap="innerHTML transition:true">
+        Load Content (2s)
+    </button>
+    
+    <div id="transition-demo" style="margin-top: 1rem;">
+        <p class="alert alert-info">Click the button to see a smooth transition.</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">Loading States</h2>
+    <p>Different ways to show loading feedback to users.</p>
+    
+    <div style="margin-bottom: 1rem;">
+        <h4>With Indicator</h4>
+        <button class="btn btn-primary" 
+                hx-get="/api/slow-load?duration=3" 
+                hx-target="#loading-demo-1"
+                hx-indicator="#loading-spinner-1">
+            Load (3s)
+        </button>
+        <span id="loading-spinner-1" class="htmx-indicator" style="margin-left: 1rem;">
+            <div class="spinner" style="display: inline-block;"></div> Loading...
+        </span>
+        <div id="loading-demo-1" style="margin-top: 1rem;"></div>
+    </div>
+    
+    <div style="margin-bottom: 1rem;">
+        <h4>Button Disabled State</h4>
+        <button class="btn btn-secondary" 
+                hx-get="/api/slow-load?duration=2" 
+                hx-target="#loading-demo-2"
+                hx-disabled-elt="this">
+            Click Me (Disables During Load)
+        </button>
+        <div id="loading-demo-2" style="margin-top: 1rem;"></div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">CSS Classes Applied by HTMX</h2>
+    <div class="alert alert-info">
+        <strong>During Requests:</strong><br>
+        • <code>htmx-request</code> - Added to the element making the request<br>
+        • <code>htmx-swapping</code> - Added during content swap (can be used for fade-out)<br>
+        • <code>htmx-settling</code> - Added after swap (can be used for fade-in)
+    </div>
+</div>
+
+<div class="card">
+    <h2>HTMX Features Demonstrated</h2>
+    <ul style="margin-left: 2rem;">
+        <li><strong>CSS Transitions</strong> - Use <code>transition:true</code> for smooth swaps</li>
+        <li><strong>Loading Indicators</strong> - Show spinners during requests</li>
+        <li><strong>Disabled Elements</strong> - Prevent multiple submissions</li>
+        <li><strong>HTMX CSS Classes</strong> - Style elements based on request state</li>
+        <li><strong>Smooth UX</strong> - Keep users informed with visual feedback</li>
+    </ul>
+</div>
+{% endblock %}

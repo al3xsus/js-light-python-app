@@ -1,0 +1,21 @@
+<li class="task-item" id="task-{{ task.id }}" style="background-color: #fee2e2; border-color: #ef4444;">
+    <div style="flex: 1;">
+        <strong>Delete "{{ task.title }}"?</strong>
+        <p style="margin-top: 0.5rem; color: #991b1b;">This action cannot be undone.</p>
+    </div>
+    
+    <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-small btn-danger"
+                hx-delete="/api/tasks/{{ task.id }}"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML transition:true">
+            Confirm Delete
+        </button>
+        <button class="btn btn-small btn-secondary"
+                hx-get="/api/tasks/{{ task.id }}"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML">
+            Cancel
+        </button>
+    </div>
+</li>

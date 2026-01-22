@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask + HTMX Demo{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">🚀 Flask + HTMX</a>
+            </div>
+            <div class="navbar-menu">
+                <a href="/" class="navbar-item">Home</a>
+                <a href="/basic" class="navbar-item">Basic</a>
+                <a href="/tasks" class="navbar-item">Tasks</a>
+                <a href="/search" class="navbar-item">Search</a>
+                <a href="/forms" class="navbar-item">Forms</a>
+                <a href="/polling" class="navbar-item">Polling</a>
+                <a href="/modal" class="navbar-item">Modal</a>
+                <a href="/transitions" class="navbar-item">Transitions</a>
+                <a href="/sse" class="navbar-item">SSE</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Flask + HTMX Demo | Built with ❤️ using Python, Flask, and HTMX</p>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+<li class="task-item {% if task.completed %}completed{% endif %}" id="task-{{ task.id }}">
+    <input type="checkbox" 
+           class="task-checkbox"
+           {% if task.completed %}checked{% endif %}
+           hx-put="/api/tasks/{{ task.id }}/toggle"
+           hx-target="#task-{{ task.id }}"
+           hx-swap="outerHTML">
+    
+    <div class="task-content">
+        <div class="task-title">{{ task.title }}</div>
+        <div class="task-priority">
+            Priority: <span class="priority-{{ task.priority }}">{{ task.priority.capitalize() }}</span>
+        </div>
+    </div>
+    
+    <div class="task-actions">
+        <button class="btn btn-small btn-secondary"
+                hx-get="/api/tasks/{{ task.id }}/edit"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML">
+            Edit
+        </button>
+        <button class="btn btn-small btn-danger"
+                hx-get="/api/tasks/{{ task.id }}/delete-confirm"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML">
+            Delete
+        </button>
+    </div>
+</li>
